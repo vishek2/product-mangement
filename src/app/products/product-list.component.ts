@@ -7,10 +7,28 @@ import { Iproduct } from './product.interface';
     styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent {
+
     pageTitle: string = 'Product List';
+
     imageWidth: number = 50;
+
     imageMargin: number = 2;
+
     showImage: boolean = true;
+
+    _listFilter: string;
+
+    get listFilter(): string {
+        return this._listFilter;
+    }
+
+    set listFilter(value: string) {
+        this._listFilter = value;
+        this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
+    }
+
+    filteredProducts: Iproduct[];
+
     products: Iproduct[] = [
             {
               'productId': 1,
@@ -33,6 +51,18 @@ export class ProductListComponent {
               'imageUrl': 'https://openclipart.org/image/300px/svg_to_png/58471/garden_cart.png'
             },
     ];
+
+    constructor() {
+        this.filteredProducts = this.products;
+        this.listFilter = '';
+    }
+
+    performFilter(filterBy: string): Iproduct[] {
+        filterBy = filterBy.toLowerCase();
+        return this.products.filter((product) =>
+            product.productName.toLowerCase().indexOf(filterBy) !== -1);
+
+    }
 
     toggleImage(): void {
         this.showImage = !this.showImage;
