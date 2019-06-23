@@ -67,4 +67,8 @@ export class ProductListComponent {
     toggleImage(): void {
         this.showImage = !this.showImage;
     }
+
+    onNotify(message: string): void {
+        alert(message);
+    }
 }
