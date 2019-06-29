@@ -37,8 +37,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.products = this.productService.getProducts();
-        this.filteredProducts = this.products;
+        this.productService.getProducts().subscribe( data => {
+            this.products = data;
+            this.filteredProducts = this.products;
+        });
     }
 
     performFilter(filterBy: string): Iproduct[] {
@@ -57,6 +59,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        
+
     }
 }
